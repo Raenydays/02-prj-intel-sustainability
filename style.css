@@ -1,1 +1,211 @@
-/* Add your CSS here */
+/* Basic reset */
+:root {
+	--body-font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+	--text-white: #ffffff;
+	--text-dark: #1f2937;
+	--text-muted: #334155;
+	--hero-overlay: rgba(14, 83, 195, 0.36);
+	--header-bg: rgba(4, 41, 112, 0.88);
+	--card-bg: #ffffff;
+	--card-shadow: 0 6px 18px rgba(11,20,32,0.06);
+	--overlay-bg: rgba(148,163,184,0.32);
+	--panel-bg: rgba(241,245,249,0.94);
+	--page-bg: #f6f8fb;
+	--radius: 14px;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; font-family: var(--body-font); color: var(--text-white); }
+body { background: url("img/intel background splash.jpg") center/cover no-repeat fixed; position: relative; }
+body::before { content: ''; position: fixed; inset: 0; background: var(--hero-overlay); backdrop-filter: blur(3px); pointer-events: none; z-index: 0; }
+
+@font-face {
+	font-family: 'Intel One Mono';
+	src: local('Intel One Mono'), local('IntelOneMono'), url('fonts/IntelOneMono.woff2') format('woff2');
+	font-weight: 100 900;
+	font-style: normal;
+	font-display: swap;
+}
+
+h1, h2, h3, h4, h5, h6 { font-family: 'Intel One Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace; }
+
+main { position: relative; z-index: 2; }
+
+/* HERO */
+.hero {
+	position: relative;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+}
+.hero-overlay { position: absolute; inset: 0; background: var(--hero-overlay); backdrop-filter: blur(3px); }
+.hero-inner {
+	position: relative;
+	width: 100%;
+	max-width: 1100px;
+	margin: 0 auto;
+	padding: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.top-header {
+	width: 100%;
+	padding: 18px 24px;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	background: var(--header-bg);
+	position: sticky;
+	top: 0;
+	z-index: 20;
+}
+.logo img { height: 44px; display: block; }
+.hero-content {
+	margin: 0 auto;
+	text-align: center;
+	color: var(--text-white);
+	padding: 20px 16px 16px;
+	display: flex;
+	flex-direction: column;
+	min-height: 100%;
+}
+.hero-content h1 {
+	font-family: 'Intel One Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace;
+	margin: 30px 12px 12px 0;
+	font-size: 4.25rem;
+	letter-spacing: -0.02em;
+	font-weight: 700;
+}
+.hero-copy {
+	margin-top: auto;
+}
+.hero-content .statement,
+.hero-content .subline,
+.hero-content .explore { margin: 6px auto; }
+.hero-content .statement { font-family: 'Lato', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; margin-top: 30px; font-weight: 700; color: #f3f7ff; font-size: 1.50rem; }
+.hero-content .subline {margin-top: 0; max-width: 760px; color: #f3f7ff; font-size: 1.15rem; }
+.hero-content .explore { font-family: 'Lato', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; margin-top: 50px; font-size: 1.15rem; color: #eef4ff; }
+
+/* TIMELINE - horizontal scroll */
+.timeline-section { padding: 28px 12px 56px 12px; background: rgba(246, 248, 251, 0.80); position: relative; z-index: 5; }
+.timeline-info { margin: 0 5px 5px 0; text-align: right; color: #475569; font-size: 0.95rem; }
+.timeline-container {
+	--gap: 18px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	gap: var(--gap);
+	overflow-x: auto;
+	padding: 16px;
+	scroll-snap-type: x mandatory;
+	scroll-padding-inline: 16px;
+	-webkit-overflow-scrolling: touch;
+}
+.timeline-container:focus { outline: 3px solid rgba(16,124,255,0.25); }
+.timeline-card {
+	scroll-snap-align: center;
+	scroll-snap-stop: always;
+	flex: 0 0 calc((100% - (var(--gap) * 2)) / 3);
+	background: var(--card-bg);
+	border-radius: var(--radius);
+	overflow: hidden;
+	box-shadow: var(--card-shadow);
+	transition: transform 200ms ease, box-shadow 200ms ease;
+	max-height: 300px;
+	position: relative;
+	z-index: 10;
+}
+.timeline-card:hover,
+.timeline-card:focus { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(11,20,32,0.12); }
+.timeline-card-header {
+	padding: 12px 5px;
+	text-align: center;
+	background: var(--header-bg);
+	border-bottom: 1px solid rgba(255,255,255,0.16);
+	font-weight: 700;
+	color: var(--text-white);
+}
+.timeline-card-header h2 {
+	margin: 0;
+	font-family: 'Intel One Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace;
+	font-size: 1.5rem;
+}
+.timeline-card-media {
+	position: relative;
+	width: 100%;
+	aspect-ratio: 3 / 4;
+	min-height: 140px;
+	max-height: 190px;
+}
+figure { margin: 0; }
+.timeline-card-media figcaption { margin: 0; }
+.timeline-card-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.timeline-card-overlay {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	padding: 18px;
+	background: var(--overlay-bg);
+	opacity: 0;
+	transform: translateY(10px);
+	transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.timeline-card:hover .timeline-card-overlay,
+.timeline-card:focus .timeline-card-overlay,
+.timeline-card:focus-within .timeline-card-overlay { opacity: 1; transform: translateY(0); }
+.overlay-copy {
+	width: 100%;
+	background: var(--panel-bg);
+	border-radius: var(--radius);
+	padding: 18px;
+	box-shadow: 0 12px 24px rgba(15,23,42,0.14);
+}
+.timeline-card .short { font-weight: 700; font-size: 1.05rem; margin: 6px 0; text-align: center; color: var(--text-dark); }
+.timeline-card .long { color: var(--text-muted); font-size: 0.95rem; text-align: center; margin-top: 8px; line-height: 1.5; }
+
+/* Small screens: slightly smaller cards */
+@media (max-width: 1199px) {
+	.timeline-card { flex: 0 0 calc((100% - var(--gap)) / 2); }
+}
+@media (max-width: 899px) {
+	.timeline-card { flex: 0 0 88%; }
+}
+@media (max-width: 599px) {
+	.hero-content h1 {
+		font-size: 2.5rem;
+		transform: translateY(-30px);
+	}
+	.hero-content { padding-top: 10px; }
+	.timeline-container {
+		flex-direction: column;
+		overflow-x: hidden;
+		scroll-snap-type: none;
+	}
+	.timeline-card {
+		flex: 1 1 100%;
+		width: 100%;
+		min-height: 0;
+		max-height: none;
+		display: flex;
+		flex-direction: column;
+	}
+	.timeline-card-media {
+		flex: 1;
+		aspect-ratio: auto;
+		min-height: 0;
+		max-height: none;
+	}
+	.timeline-card-media img {
+		height: 100%;
+		width: 100%;
+	}
+}
+
+/* Hide default scrollbar in WebKit but keep it usable */
+.timeline-container::-webkit-scrollbar { height: 10px; }
+.timeline-container::-webkit-scrollbar-thumb { background: rgba(11,20,32,0.30); border-radius: 8px; }
+
+p { text-align: center; color: #475569; }
